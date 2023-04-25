@@ -10,8 +10,7 @@ The final year project is about gesture recognition using deep learning and Wi-F
 * Real VNC
 
 ## Recognition system framework
-![theoretical recognition system](https://github.com/Z-Yannn/FYP-Gesture-Recognition-Using-Deep-Learning-and-Wi-Fi/blob/main/Picture/Theoretical%20recognition%20system.png?raw=true)
-
+![theoretical recognition system](https://github.com/Z-Yannn/FYP-Gesture-Recognition-Using-Deep-Learning-and-Wi-Fi/blob/main/Picture/Theoretical%20recognition%20system.png?raw=true)  
 The basic principle is that various human activities produce different modifications in radio propagation. Such modifications can be quantified by channel state information (CSI). The CSI represented by the same gesture is similar, although slight differences exist due to different acquisition times or waving rates. If many sets of CSI records are collected, a deep learning model can be trained offline. The model can predict the activity type using CSI acquired during the test stage.
 
 Code explanations will be updated as soon as possible.
