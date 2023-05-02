@@ -1,5 +1,5 @@
 # FYP_Gesture Recognition Using Deep Learning and Wi-Fi
-The final year project is about gesture recognition using deep learning and Wi-Fi. From September 2022 to April 2023, the project aims to design, build and evaluate a system capable of recognizing five specific sign language words. A platform combining channel state information (CSI) extraction from Wi-Fi signals and classification algorithms was created.  
+The final year project is about gesture recognition using deep learning and Wi-Fi, supervised by [Junqing Zhang](https://junqing-zhang.github.io/). From September 2022 to April 2023, the project aims to design, build and evaluate a system capable of recognizing five specific sign language words. A platform combining channel state information (CSI) extraction from Wi-Fi signals and classification algorithms was created.  
 
 ## Table of contents
 - [Apparatus_and_software](#Apparatus_and_software)
