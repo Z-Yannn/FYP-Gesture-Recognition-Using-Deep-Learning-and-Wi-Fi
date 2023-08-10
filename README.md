@@ -6,7 +6,9 @@ The final year project is about gesture recognition using deep learning and Wi-F
 - [Recognition_system_framework](#Recognition_system_framework)
 - [CSI_collection](#CSI_collection)
 - [CSI_visualization](#CSI_visualization)
+- [Data_preprocessing](#Data_preprocessing)
 - [Classification](#Classification)
+- [Control_Spotify](#Control_Spotify)
 ## Apparatus_and_software
 * Raspberry Pi 4B
 * AC750 Wi-Fi travel router (model: TL-WR902AC)
@@ -107,6 +109,31 @@ for i in range(number_packets):
 )
 ```
 
+## Data_preprocessing
+### Algorithm 1: CSI PREPROCESSING
+**Input**: Raw data as $CSI_{raw}$, pilot and null as $CSI_{pilot}$ and $CSI_{null}$
+**Output**: CSI preconditioned as $CSI_{precond}$
+1. $CSI_{precond}$ <- $CSI_{raw}$ - $CSI_{p}$ - $CSI_{null}$
+
+### Algorithm 2: HAMPEL FILTER
+**Input**: $CSI_{med}$ <- local median of current window of the magnitude of $CSI_{precond}$: |$\widehat{H}(f,t)$| 
+**Output**: Magnitude outliers removed as |$\widetilde{H}(f,t)$| 
+1. median absolute deviation (MAD) of the current subcarrier
+2. **if** $|\widetilde{H}(f_i,t)| - CSI_{med}(i) > n_σ × MAD$
+3. $\widetilde{H}(f_i,t) = CSI_{med}(i)$
+4. **end if**
+
+### Algorithm3: LINEAR TRANSFORMATION
+**Input**:  The phase of $CSI_{precond}$: $∠\widehat{H}(f,t)$
+**Output**: Sanitised phase $∠\widetilde{H}(f,t)$
+
+1. $k = \frac{∠\widetilde{H}(f_{52},t) - ∠\widetilde{H}(f_{1},t)}{m_{52} - m_1}$
+2.  $b=\frac{1}{52}\sum_{i=52}∠\widetilde{H}(f_{i},t)$
+3.  $∠\widetilde{H}(f_{i},t) = ∠\widehat{H}(f,t) - km_i - b_i$
+
+### After signal preprocessing
+![After](https://github.com/Z-Yannn/FYP-Gesture-Recognition-Using-Deep-Learning-and-Wi-Fi/blob/main/Picture/preprocessing.png?raw=true)
+The process shows all CSI packets for one sample of sign “Left” after signal processing
 
 ## Classification
 
@@ -131,4 +158,29 @@ For 3500 samples collected in the lab:
 
 <img width="450" src="https://github.com/Z-Yannn/FYP-Gesture-Recognition-Using-Deep-Learning-and-Wi-Fi/blob/main/Picture/confusion%20matrix.png?raw=true"/>  
 
-Code explanations will be updated as soon as possible.
+## Control Spotify
+Combined the system with the Spotify API to remotely control web music playback.
+[![watch the video]](https://github.com/Z-Yannn/FYP-Gesture-Recognition-Using-Deep-Learning-and-Wi-Fi/blob/main/Picture/recognitionvideo.mp4)
+
+```
+# Authenticate and get the access token    
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri, scope=scope))
+```
+```
+# define the action to be executed when a message is received  
+def execute(message):  
+    if message == "down":  
+        sp.pause_playback()  
+    if message == "start":  
+        sp.start_playback()  
+    if message == "right":  
+        sp.next_track()  
+    if message == "left":  
+        sp.previous_track()  
+```
+```
+# Set up socket connection  
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
+sock.bind(('localhost', 2000))  
+sock.listen()  
+```
