@@ -133,6 +133,7 @@ for i in range(number_packets):
 
 ### After signal preprocessing
 ![After](https://github.com/Z-Yannn/FYP-Gesture-Recognition-Using-Deep-Learning-and-Wi-Fi/blob/main/Picture/preprocessing.png?raw=true)
+
 The process shows all CSI packets for one sample of sign “Left” after signal processing
 
 ## Classification
